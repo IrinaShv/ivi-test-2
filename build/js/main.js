@@ -15,21 +15,21 @@ timerElement.addEventListener('click', initCountdown, { once: true });
 ['mouseout', 'touchend'].forEach(event => timerElement.addEventListener(event, () => elementContainer.classList.remove('container_highlight')));
 
 // функция, инициирующая первый запуск таймера
-function initCountdown() { startCountdown(timerElement, timerTextElement) }
+function initCountdown() { 
+    startCountdown(timerTextElement); 
+    timerElement.disabled = true; 
+}
 
 // функция, запускающая таймер на кнопке и обновляющая значение в ней
-function startCountdown(buttonEl, textEl) {
+function startCountdown(textEl) {
     let currentCount = 1;
     textEl.innerHTML = currentCount;
-    buttonEl.disabled = true;
 
     const countdown = setInterval(() => {
         currentCount++;
         if (currentCount > 3) {
             clearInterval(countdown);
             textEl.innerHTML = 'Go!';
-            buttonEl.disabled = false;
-
             startLoop(3);
         } else {
             textEl.innerHTML = currentCount;
@@ -48,7 +48,7 @@ function startLoop(count) {
         loopCount--;
         if (loopCount < 0) {
             clearInterval(timerLoop);
-            startCountdown(timerElement, timerTextElement)
+            startCountdown(timerTextElement)
         }
     }, 1000);
 }
